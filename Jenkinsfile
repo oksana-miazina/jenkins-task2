@@ -25,7 +25,7 @@ pipeline {
                         script {
                             try {
                               dir("target") {
-                                sh "java -jar contact.war"
+                                sh "java -jar contact.war --server.port=${APP_PORT}"
                               }
                             } catch(Throwable e) {
                                 currentBuild.result = "SUCCESS"
