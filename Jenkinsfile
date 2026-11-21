@@ -16,7 +16,6 @@ pipeline {
         stage('Integration Test') {
             parallel {
                 stage('Running Application') {
-                    agent any
                     options {
                       timeout(time: 60, unit: "SECONDS") 
                     }
