@@ -16,6 +16,8 @@ pipeline {
         stage('Integration Test') {
             parallel {
                 stage('Running Application') {
+                    agent any
+                    
                     options {
                       timeout(time: 60, unit: "SECONDS") 
                     }
@@ -23,7 +25,7 @@ pipeline {
                     steps {
                         script {
                             try {
-                              dir("target") {
+                              dir("../${jobName}/target") {
                                 sh "java -jar contact.war --server.port=${APP_PORT}"
                               }
                             } catch(Throwable e) {
