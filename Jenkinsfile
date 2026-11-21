@@ -1,11 +1,11 @@
+def jobName = env.JOB_NAME
+
 pipeline {
     agent any
 
     environment {
         APP_PORT = '9090'
     }
-
-    def JOB_NAME = env.JOB_NAME
 
     stages {
         stage('Build') {
@@ -25,7 +25,7 @@ pipeline {
                         script {
                             try {
                               dir("target") {
-                                sh "contact.war"
+                                sh "java -jar contact.war"
                               }
                             } catch(Throwable e) {
                                 currentBuild.result = "SUCCESS"
@@ -35,8 +35,8 @@ pipeline {
                 }
                 stage('Running Test') {
                     steps {
-                      timeout(time: 30, unit: "SECONDS") 
-                      mvn -Dtest=RestIT test
+                      sleep(time: 30, unit: "SECONDS") 
+                      sh "mvn -Dtest=RestIT test"
                     }
                 }
             }
